@@ -1,0 +1,37 @@
+.tab-wrapper {
+    padding: 100px 0 80px;
+    .game-tabs {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        li {
+            color: #fff;
+            padding-left: 55px;
+            margin-right: 30px;
+            font-size: 36px;
+            text-transform: uppercase;
+            font-family: 'Montserrat', sans-serif;
+            list-style: none;
+            position: relative;
+            cursor: pointer;
+            span {
+                color: #142438;
+                font-size: 80px;
+                font-weight: 600;
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                z-index: -1;
+                opacity: 0;
+                visibility: visible;
+            }
+            &.active {
+                span {
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
+        }
+    }
+}

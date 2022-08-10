@@ -7,7 +7,7 @@ export interface IResponse {
   id: number;
   name: string;
   rating: number;
-  summary: string;
+  summary: any;
 }
 
 @Component({

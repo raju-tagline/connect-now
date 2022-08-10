@@ -1,1 +1,59 @@
-
+<div class="video-game-wrapper">
+  <div class="container">
+    <div class="column-row">
+      <div class="column4">
+        <div class="filters">
+          <h3>Filter Results</h3>
+          <div class="filtes-group">
+            <label>Name (contains)</label>
+            <input type="text" placeholder="Text string" />
+          </div>
+          <div class="filtes-group">
+            <label>Minimum Score</label>
+            <input type="text" placeholder="1 - 10" />
+          </div>
+          <div class="filtes-group">
+            <label>Order By</label>
+            <div class="dropdown">
+              <div class="arrow">
+                <img src="assets/Images/ArrowUp.png" alt="arrow" />
+              </div>
+              <div class="dropdown-toggle"><span>Release Date</span></div>
+              <!-- Add Show class in UL after click-->
+              <ul class="dropdown-menu">
+                <li>Score</li>
+                <li>Name</li>
+              </ul>
+            </div>
+          </div>
+          <div class="filtes-button">
+            <button>Clear</button>
+          </div>
+        </div>
+      </div>
+      <div class="column8" *ngIf="videoGameList.length">
+        <div class="game-list" *ngFor="let game of videoGameList">
+          <div class="num">{{ game?.rating | number: "1.0-0" }}</div>
+          <div class="game-img">
+            <img src="assets/Images/game-image.jpg" alt="" />
+          </div>
+          <div class="game-content">
+            <h3>Game Title {{ game?.name }}</h3>
+            <span
+              >Release Date:
+              {{ game?.first_release_date | date: "MM/DD/YYYY" }}</span
+            >
+            <p>
+              [Summary]
+              {{
+                game?.summary?.length > 200
+                  ? (game?.summary + "..." | slice: 0 - 200)
+                  : game?.summary
+              }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
