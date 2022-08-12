@@ -26,12 +26,16 @@
             <div class="column12">
               <div class="form-group">
                 <label>Message <span class="required">*</span></label>
-                <textarea type="text" rows="5" formControlName="message" ></textarea>
+                <textarea
+                  type="text"
+                  rows="5"
+                  formControlName="message"
+                ></textarea>
               </div>
             </div>
             <div class="column12">
               <div class="form-group send-button">
-                <button [disabled]="!contactFrom.invalid">Send</button>
+                <button>Send</button>
               </div>
             </div>
           </div>

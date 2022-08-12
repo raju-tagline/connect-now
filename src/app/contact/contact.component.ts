@@ -24,9 +24,6 @@ export class ContactComponent implements OnInit {
   }
 
   submit() {
-    if (this.contactFrom.invalid) {
-      return;
-    }
     this.contactFrom.reset();
   }
 }
