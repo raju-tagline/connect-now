@@ -58,18 +58,22 @@ export class ConnetNowComponent implements OnInit {
   }
 
   findValueName(event: any) {
+    console.log(
+      'event?.target?.value?.length :>> ',
+      event?.target?.value?.length
+    );
     if (event?.target?.value && event?.target?.value.length) {
-      const videoGames: IResponse[] = this.videoGameList;
+      const videoGames: IResponse[] = [...this.videoGameList];
       let listOfGame: IResponse[] = [];
       videoGames.find((ele: IResponse) => {
         if (ele && ele.name.toLowerCase().includes(event.target.value)) {
           listOfGame.push(ele);
         }
       });
-      this.filteredGames = listOfGame;
-    } else if (!this.filteredGames?.length) {
+      this.filteredGames = [...listOfGame];
+    } else if (!event?.target?.value?.length) {
       this.filteredGames = [...this.videoGameList];
-    } else if (!this.filteredGames.length && !event?.target?.value?.length) {
+    } else if (!this.filteredGames?.length) {
       this.filteredGames = [...this.videoGameList];
     }
   }
@@ -88,6 +92,8 @@ export class ConnetNowComponent implements OnInit {
       });
       this.filteredGames = listOfGame;
     } else if (!this.filteredGames?.length) {
+      this.filteredGames = [...this.videoGameList];
+    } else if (!event?.target?.value?.length) {
       this.filteredGames = [...this.videoGameList];
     } else if (!this.filteredGames.length && !event?.target?.value?.length) {
       this.filteredGames = [...this.videoGameList];
