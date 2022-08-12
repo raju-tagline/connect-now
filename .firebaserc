@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "connect-now-1": {
+      "hosting": {
+        "connect-now": [
+          "connect-now-1"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "connect-now-1"
+  }
+}

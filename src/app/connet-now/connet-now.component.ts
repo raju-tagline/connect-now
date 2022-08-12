@@ -1,4 +1,3 @@
-import { environment } from './../../environments/environment';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -18,7 +17,7 @@ export interface IResponse {
   styleUrls: ['./connet-now.component.scss'],
 })
 export class ConnetNowComponent implements OnInit {
-  private endPoint: string = environment.URL;
+  private endPoint: string = 'https://public.connectnow.org.uk/applicant-test/';
   public videoGameList!: IResponse[];
   public filteredGames!: IResponse[];
   public videoGameFilterForm!: FormGroup;
@@ -68,7 +67,7 @@ export class ConnetNowComponent implements OnInit {
       this.filteredGames = listOfGame;
     } else if (!this.filteredGames?.length) {
       this.filteredGames = [...this.videoGameList];
-    } else if (!event?.target?.value?.length) {
+    } else if (!this.filteredGames.length && !event?.target?.value?.length) {
       this.filteredGames = [...this.videoGameList];
     }
   }
@@ -88,7 +87,7 @@ export class ConnetNowComponent implements OnInit {
       this.filteredGames = listOfGame;
     } else if (!this.filteredGames?.length) {
       this.filteredGames = [...this.videoGameList];
-    } else if (!event?.target?.value?.length) {
+    } else if (!this.filteredGames.length && !event?.target?.value?.length) {
       this.filteredGames = [...this.videoGameList];
     }
   }
