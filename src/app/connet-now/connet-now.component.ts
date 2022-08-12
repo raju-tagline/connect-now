@@ -21,6 +21,7 @@ export class ConnetNowComponent implements OnInit {
   public videoGameList!: IResponse[];
   public filteredGames!: IResponse[];
   public videoGameFilterForm!: FormGroup;
+  public isDateResolve: boolean = false;
 
   constructor(private http: HttpClient) {}
 
@@ -52,6 +53,7 @@ export class ConnetNowComponent implements OnInit {
             };
           });
         }
+        this.isDateResolve = true;
       });
   }
 
