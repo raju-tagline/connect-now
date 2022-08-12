@@ -20,16 +20,28 @@ img {
   max-width: 100%;
 }
 .container {
-  max-width: 1320px;
   margin: 0 auto;
   width: 100%;
+  padding: 0 15px;
+  @media (min-width: 768px) {
+    max-width: 720px;
+  }
+  @media (min-width: 992px) {
+    max-width: 960px;
+  }
+  @media (min-width: 1200px) {
+    max-width: 1140px;
+  }
+  @media (min-width: 1400px) {
+    max-width: 1320px;
+  }
 }
 .column-row {
   display: flex;
   flex-wrap: wrap;
   margin: 0 -15px;
 }
-[class*="column"] {
+[class*=column]:not(.column-row){
   padding: 0 15px;
 }
 .column4 {
@@ -38,12 +50,22 @@ img {
 .column8 {
   width: 75%;
 }
+.column6 {
+  width: 50%;
+}
+.column12 {
+  width: 100%;
+}
 label {
   margin-bottom: 10px;
   display: block;
   color: #fff;
 }
-input {
+.form-group {
+  margin-bottom: 30px;
+}
+input,
+textarea {
   width: 100%;
   border: 0;
   padding: 10px;
@@ -51,7 +73,9 @@ input {
   color: #c1d1e8;
   font-family: 'Mulish', sans-serif;
 }
-input:focus {
+select:focus,
+input:focus,
+textarea:focus {
   outline: none;
 }
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
@@ -71,9 +95,11 @@ button {
   color: #ffffff;
   border: 0;
   padding: 10px 20px;
+  cursor: pointer;
 }
 .dropdown {
   position: relative;
+  background-color: #182c47;
   .arrow {
     width: 38px;
     height: 38px;
@@ -82,6 +108,7 @@ button {
     position: absolute;
     left: -38px;
     top: 0;
+    padding: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -89,27 +116,32 @@ button {
       width: 20px;
     }
   }
-  .dropdown-toggle {
-    padding: 10px 40px 10px 10px;
-    background-color: #182c47;
+  &::before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 5px 5px 0 5px;
+    border-color: #ffffff transparent transparent transparent;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+  select {
+    border: 0;
+    background-color: transparent;
     color: #c1d1e8;
+    padding: 10px 40px 10px 10px;
+    height: 38px;
     position: relative;
-    flex: 1;
+    width: 100%;
     cursor: pointer;
-    &::before {
-      content: "";
-      width: 0;
-      height: 0;
-      border-style: solid;
-      border-width: 5px 5px 0 5px;
-      border-color: #ffffff transparent transparent transparent;
-      position: absolute;
-      right: 15px;
-      top: 50%;
-      -moz-transform: translateY(-50%);
-      -webkit-transform: translateY(-50%);
-      transform: translateY(-50%);
-    }
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
   }
   .dropdown-menu {
     position: absolute;

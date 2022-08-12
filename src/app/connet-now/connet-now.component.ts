@@ -20,7 +20,7 @@ export interface IResponse {
 export class ConnetNowComponent implements OnInit {
   private endPoint: string = environment.URL;
   public videoGameList!: IResponse[];
-  public isDropDownShow: boolean = false;
+  public filteredGames!: IResponse[];
   public videoGameFilterForm!: FormGroup;
 
   constructor(private http: HttpClient) {}
@@ -34,7 +34,7 @@ export class ConnetNowComponent implements OnInit {
     this.videoGameFilterForm = new FormGroup({
       name: new FormControl(''),
       score: new FormControl(''),
-      order: new FormControl(''),
+      order: new FormControl('timeStamp'),
     });
   }
 
@@ -48,23 +48,90 @@ export class ConnetNowComponent implements OnInit {
               ...res,
               first_release_date: moment(
                 new Date(res.first_release_date)
-              ).format('MM/DD/YYYY'),
+              ).format('DD/MM/YYYY'),
+              timeStamp: res.first_release_date,
             };
           });
         }
       });
   }
 
-  findValue(event: any) {
+  findValueName(event: any) {
     if (event?.target?.value && event?.target?.value.length) {
       const videoGames: IResponse[] = this.videoGameList;
-      const listOfGame: IResponse[] = [];
+      let listOfGame: IResponse[] = [];
       videoGames.find((ele: IResponse) => {
         if (ele && ele.name.toLowerCase().includes(event.target.value)) {
           listOfGame.push(ele);
         }
       });
-      this.videoGameList = listOfGame;
+      this.filteredGames = listOfGame;
+    } else if (!this.filteredGames?.length) {
+      this.filteredGames = [...this.videoGameList];
+    } else if (!event?.target?.value?.length) {
+      this.filteredGames = [...this.videoGameList];
     }
+  }
+
+  findValueScore(event: any) {
+    if (
+      this.filteredGames?.length &&
+      event?.target?.value &&
+      event?.target?.value.length
+    ) {
+      let listOfGame: IResponse[] = [];
+      this.filteredGames.find((ele: IResponse) => {
+        if (ele && ele.rating >= Number(event.target.value)) {
+          listOfGame.push(ele);
+        }
+      });
+      this.filteredGames = listOfGame;
+    } else if (!this.filteredGames?.length) {
+      this.filteredGames = [...this.videoGameList];
+    } else if (!event?.target?.value?.length) {
+      this.filteredGames = [...this.videoGameList];
+    }
+  }
+
+  orderBy(event: any) {
+    const value: any = event.target.value;
+    if (this.filteredGames?.length) {
+      if (
+        event.target.value === 'timeStamp' ||
+        event.target.value === 'rating'
+      ) {
+        this.filteredGames.sort((a: any, b: any): any => {
+          return a[`${value}`] - b[`${value}`];
+        });
+      }
+      if (event.target.value === 'name') {
+        this.filteredGames.sort((a: any, b: any): any => {
+          return a[`${value}`].localeCompare(b[`${value}`]);
+        });
+      }
+    } else {
+      this.filteredGames = [...this.videoGameList];
+      if (
+        event.target.value === 'timeStamp' ||
+        event.target.value === 'rating'
+      ) {
+        this.filteredGames.sort((a: any, b: any): any => {
+          return a[`${value}`] - b[`${value}`];
+        });
+      }
+      if (event.target.value === 'name') {
+        this.filteredGames.sort((a: any, b: any): any => {
+          return a[`${value}`].localeCompare(b[`${value}`]);
+        });
+      }
+    }
+  }
+
+  clearFilter() {
+    this.filteredGames = [];
+    this.videoGameFilterForm.reset();
+    this.videoGameFilterForm.patchValue({
+      order: 'timeStamp',
+    });
   }
 }

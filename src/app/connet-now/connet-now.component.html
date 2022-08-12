@@ -11,78 +11,98 @@
                 type="text"
                 placeholder="Text string"
                 formControlName="name"
-                (keyup)="findValue($event)"
+                (keyup)="findValueName($event)"
               />
             </div>
-            <div class="filtes-group">
-              <label>Minimum Score</label>
-              <input
-                type="text"
-                placeholder="1 - 10"
-                formControlName="score"
-                onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
-                max="10"
-                min="1"
-              />
-            </div>
-            <div class="filtes-group">
-              <label>Order By</label>
-              <div class="dropdown">
-                <div class="arrow">
-                  <img src="assets/Images/ArrowUp.png" alt="arrow" />
-                </div>
-                <!-- <div
-                  class="dropdown-toggle"
-                  (click)="isDropDownShow = !isDropDownShow"
-                >
-                  <span>Release Date</span>
-                </div> -->
-                <select
-                  class="dropdown dropdown-toggle show"
-                  formControlName="order"
-                >
-                  <option value="release date">Release Date</option>
-                  <option value="score">Score</option>
-                  <option value="name">Name</option>
-                </select>
-                <!-- <ul
-                  class="dropdown-menu"
-                  [ngClass]="isDropDownShow ? 'show' : ''"
-                >
-                  <li>Score</li>
-                  <li>Name</li>
-                </ul> -->
+            <div class="filter-groups">
+              <div class="filtes-group">
+                <label>Minimum Score</label>
+                <input
+                  type="text"
+                  placeholder="1 - 10"
+                  formControlName="score"
+                  (keyup)="findValueScore($event)"
+                  onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+                  max="10"
+                  min="1"
+                />
               </div>
-            </div>
-            <div class="filtes-button">
-              <button>Clear</button>
+              <div class="filtes-group">
+                <label>Order By</label>
+                <div class="dropdown">
+                  <div class="arrow">
+                    <img src="assets/Images/ArrowUp.png" alt="arrow" />
+                  </div>
+                  <!-- <div
+                      class="dropdown-toggle"
+                      (click)="isDropDownShow = !isDropDownShow"
+                    >
+                      <span>Release Date</span>
+                    </div> -->
+                  <select formControlName="order" (change)="orderBy($event)">
+                    <option value="timeStamp" selected>Release Date</option>
+                    <option value="rating">Score</option>
+                    <option value="name">Name</option>
+                  </select>
+                  <!-- <ul
+                      class="dropdown-menu"
+                      [ngClass]="isDropDownShow ? 'show' : ''"
+                    >
+                      <li>Score</li>
+                      <li>Name</li>
+                    </ul> -->
+                </div>
+              </div>
+              <div class="filtes-button">
+                <button (click)="clearFilter()">Clear</button>
+              </div>
             </div>
           </form>
         </div>
       </div>
       <div class="column8" *ngIf="videoGameList?.length">
-        <div class="game-list" *ngFor="let game of videoGameList">
-          <div class="num">{{ game?.rating | number: "1.0-0" }}</div>
-          <div class="game-img">
-            <img src="assets/Images/game-image.jpg" alt="" />
+        <ng-container *ngIf="!filteredGames?.length">
+          <div class="game-list" *ngFor="let game of videoGameList">
+            <div class="num">{{ game?.rating | number: "1.0-0" }}</div>
+            <div class="game-img">
+              <img src="assets/Images/game-image.jpg" alt="" />
+            </div>
+            <div class="game-content">
+              <!-- <h3>Game Title {{ game?.name }}</h3> -->
+              <h3>{{ game?.name }}</h3>
+              <span>Release Date: {{ game?.first_release_date }}</span>
+              <p>
+                [Summary]
+                {{
+                  game?.summary?.length > 200
+                    ? (game?.summary + "..." | slice: 0 - 200)
+                    : game?.summary
+                }}
+              </p>
+            </div>
           </div>
-          <div class="game-content">
-            <!-- <h3>Game Title {{ game?.name }}</h3> -->
-            <h3>{{ game?.name }}</h3>
-            <span
-              >Release Date:
-              {{ game?.first_release_date }}</span
-            >
-            <p>
-              [Summary]
-              {{
-                game?.summary?.length > 200
-                  ? (game?.summary + "..." | slice: 0 - 200)
-                  : game?.summary
-              }}
-            </p>
+        </ng-container>
+        <ng-container *ngIf="filteredGames?.length">
+          <div class="game-list" *ngFor="let game of filteredGames">
+            <div class="num">{{ game?.rating | number: "1.0-0" }}</div>
+            <div class="game-img">
+              <img src="assets/Images/game-image.jpg" alt="" />
+            </div>
+            <div class="game-content">
+              <!-- <h3>Game Title {{ game?.name }}</h3> -->
+              <h3>{{ game?.name }}</h3>
+              <span>Release Date: {{ game?.first_release_date }}</span>
+              <p>
+                [Summary]
+                {{
+                  game?.summary?.length > 200
+                    ? (game?.summary + "..." | slice: 0 - 200)
+                    : game?.summary
+                }}
+              </p>
+            </div>
           </div>
-        </div>
+        </ng-container>
       </div>
     </div>
   </div>

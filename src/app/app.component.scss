@@ -15,6 +15,15 @@
             list-style: none;
             position: relative;
             cursor: pointer;
+            @media screen and (max-width: 991px) {
+                width: 100%;
+                padding-top: 30px;
+                padding-left: 40px;
+            }
+            @media screen and (max-width: 575px) {
+                font-size: 30px;
+                padding-left: 30px;
+            }
             span {
                 color: #142438;
                 font-size: 80px;
@@ -25,6 +34,14 @@
                 z-index: -1;
                 opacity: 0;
                 visibility: visible;
+                @media screen and (max-width: 991px) {
+                    font-size: 60px;
+                    top: -10px;
+                    bottom: auto;
+                }
+                @media screen and (max-width: 575px) {
+                    font-size: 50px;
+                }
             }
             &.active {
                 span {
