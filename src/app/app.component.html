@@ -1,9 +1,19 @@
 <div class="tab-wrapper">
-    <div class="container">
-        <ul class="game-tabs">
-            <li class="active">Video Games <span>Video</span></li>
-            <li>Contact <span>Contact</span></li>
-        </ul>
-    </div>
+  <div class="container">
+    <ul class="game-tabs">
+      <li
+        routerLink=""
+        [ngClass]="router.url.includes('contact') ? '' : 'active'"
+      >
+        Video Games <span>Video</span>
+      </li>
+      <li
+        routerLink="contact"
+        [ngClass]="router.url.includes('contact') ? 'active' : ''"
+      >
+        Contact <span>Contact</span>
+      </li>
+    </ul>
+  </div>
 </div>
 <router-outlet></router-outlet>
